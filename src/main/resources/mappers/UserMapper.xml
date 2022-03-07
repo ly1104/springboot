@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjxxt.mapper.UserMapper">
+
+
+
+    <!--根据id查询-->
+    <select id="selectUserById" resultType="com.yjxxt.bean.User">
+        select * from tb_user where user_id=#{id}
+    </select>
+
+    <!--根据用户名查询-->
+    <select id="selectUserByName"
+            resultType="com.yjxxt.bean.User">
+    select * from tb_user where user_name=#{userName}
+    </select>
+
+    <!--分页条件查询-->
+    <select id="selectParams" parameterType="com.yjxxt.query.UserQuery" resultType="com.yjxxt.bean.User">
+        select * from tb_user
+        <where>
+        <if test="userName!=null and userName!=''">
+            and user_name like "%${userName}%"
+        </if>
+        </where>
+    </select>
+
+    <!--添加-->
+    <insert id="insertUser">
+    insert into tb_user(user_name,user_pwd) values(#{userName},#{userPwd})
+    </insert>
+
+    <!--删除-->
+    <delete id="deleteUserById">
+        delete from tb_user where user_id=#{id }
+    </delete>
+
+    <!--修改-->
+    <update id="updateUser">
+        update tb_user set user_name=#{userName},user_pwd=#{userPwd} where user_id=#{id}
+    </update>
+</mapper>
